@@ -24,9 +24,9 @@ function CreateUser() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log(formData);
     try {
-      const response = await fetch('http://localhost:3001/api/users', { // Cambia la URL según tu configuración
+      const response = await fetch('http://localhost:3001/api/users', { 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -41,7 +41,7 @@ function CreateUser() {
       const data = await response.json();
       console.log('User registered successfully:', data);
       setError('');
-      // Reset form data after successful registration
+ 
       setFormData({
         email: '',
         password: '',
