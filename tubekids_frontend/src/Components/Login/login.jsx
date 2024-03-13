@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import Register from '../Register/Register';
 import './Login.css'; 
 
@@ -9,6 +10,7 @@ const Login = () => {
   });
 
   const [error, setError] = useState('');
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,9 +40,7 @@ const Login = () => {
       localStorage.setItem("Name", data.name);
       localStorage.setItem("Id", data._id);
       setError('');
-
-      // Set user in parent component
-      console.log(data); // Assuming the data returned from the server contains user information
+      setLoggedIn(true);
 
       // Clear form data
       setFormData({
@@ -53,18 +53,22 @@ const Login = () => {
     }
   };
 
+  if (loggedIn) {
+    return <Navigate to="/home" />; 
+  }
+
   return (
-    <div className="container"> {/* Asigna la clase contenedora */}
-      <div className="form-container"> {/* Agrega un contenedor para el formulario */}
+    <div className="container"> 
+      <div className="form-container"> 
         <h2>Login</h2>
         {error && <div className="error-message">{error}</div>}
         <form onSubmit={handleSubmit}>
-          <input type="email" name="email" placeholder="Email *" value={formData.email} onChange={handleChange} required />
-          <input type="password" name="password" placeholder="Password *" value={formData.password} onChange={handleChange} required />
+          <input className='input' type="email" name="email" placeholder="Email *" value={formData.email} onChange={handleChange} required />
+          <input className='input' type="password" name="password" placeholder="Password *" value={formData.password} onChange={handleChange} required />
           <button type="submit">Login</button>
         </form>
       </div>
-        <Register />
+      <Register />
     </div>
   );
 };
