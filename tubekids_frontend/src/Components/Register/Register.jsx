@@ -33,6 +33,12 @@ const Register = () => {
       return;
     }
 
+    // Validación del PIN
+    if (!/^\d{6}$/.test(formData.pin)) {
+      setError('El PIN debe tener exactamente 6 dígitos');
+      return;
+    }
+
     try {
       const response = await fetch('http://localhost:3001/api/users', {
         method: 'POST',
@@ -91,6 +97,5 @@ const Register = () => {
     </div>
   );
 }
-
 
 export default Register;

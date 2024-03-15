@@ -1,23 +1,41 @@
 import React, { useState, useEffect } from 'react';
+import './Modal.css';
 
 const AdministrationKids = () => {
   const [formData, setFormData] = useState({
     name: '',
     pin: '',
-    avatar: '',
+    avatar: '', // Elimina avatar del estado inicial
     age: '',
     user: localStorage.getItem("Id")
   });
 
   const [error, setError] = useState('');
   const [children, setChildren] = useState([]);
+  const [isOpen, setIsOpen] = useState(false); 
+  const [selectedAvatar, setSelectedAvatar] = useState('');
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const imageLinks = [
+    'https://cdn-icons-png.freepik.com/256/1326/1326418.png?ga=GA1.1.74766830.1710471239&',
+    'https://cdn-icons-png.freepik.com/256/1326/1326412.png?ga=GA1.1.74766830.1710471239&',
+    'https://cdn-icons-png.freepik.com/256/1326/1326405.png?ga=GA1.1.74766830.1710471239&'
+  ];
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const handleImageClick = (imageLink) => {
+    setSelectedAvatar(imageLink);
     setFormData(prevData => ({
       ...prevData,
-      [name]: value
+      avatar: imageLink 
     }));
+    closeModal(); 
   };
 
   const handleSubmit = async (e) => {
@@ -47,8 +65,8 @@ const AdministrationKids = () => {
         age: '',
         user: localStorage.getItem("Id")
       });
+      setSelectedAvatar("");
 
-      // Actualizar la lista de niños
       fetchChildren();
     } catch (error) {
       console.error('Error creating child:', error);
@@ -79,8 +97,6 @@ const AdministrationKids = () => {
       if (!response.ok) {
         throw new Error('Error deleting child');
       }
-
-      // Actualizar la lista de niños
       fetchChildren();
     } catch (error) {
       console.error('Error deleting child:', error);
@@ -97,19 +113,38 @@ const AdministrationKids = () => {
       <h2>Create Child</h2>
       {error && <div className="error-message">{error}</div>}
       <form onSubmit={handleSubmit}>
-        <input type="text" name="name" placeholder="Name *" value={formData.name} onChange={handleChange} required />
-        <input type="text" name="pin" placeholder="PIN *" value={formData.pin} onChange={handleChange} required />
-        <input type="text" name="avatar" placeholder="Avatar" value={formData.avatar} onChange={handleChange} />
-        <input type="number" name="age" placeholder="Age *" value={formData.age} onChange={handleChange} required />
+        <input type="text" name="name" placeholder="Name *" value={formData.name} onChange={(e) => setFormData(prevData => ({ ...prevData, name: e.target.value }))} required />
+        <input type="text" name="pin" placeholder="PIN *" value={formData.pin} onChange={(e) => setFormData(prevData => ({ ...prevData, pin: e.target.value }))} required />
+        {selectedAvatar && <img src={selectedAvatar} alt="Selected Avatar" />}
+        <button type="button" onClick={openModal}>Select Avatar</button>
+        <input type="number" name="age" placeholder="Age *" value={formData.age} onChange={(e) => setFormData(prevData => ({ ...prevData, age: e.target.value }))} required />
         <button type="submit">Create Child</button>
       </form>
+      {isOpen && (
+        <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="close-button" onClick={closeModal}>Cerrar modal</button>
+            <h2>Seleccionar imagen para el avatar</h2>
+            <div className="image-container">
+              {imageLinks.map((imageLink, index) => (
+                <img
+                  key={index}
+                  src={imageLink}
+                  alt={`Imagen ${index + 1}`}
+                  onClick={() => handleImageClick(imageLink)}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
       <h2>Children</h2>
       <ul>
         {children.map(child => (
           <li key={child._id}>
             <p>Name: {child.name}</p>
             <p>PIN: {child.pin}</p>
-            <p>Avatar: {child.avatar}</p>
+            <img src={child.avatar} alt='avatar'></img>
             <p>Age: {child.age}</p>
             <button onClick={() => handleDelete(child._id)}>Delete</button>
           </li>
@@ -119,4 +154,4 @@ const AdministrationKids = () => {
   );
 };
 
-export default AdministrationKids
+export default AdministrationKids;

@@ -1,7 +1,8 @@
-import React, { useState, useEffect  } from 'react';
+import React, { useState, useEffect } from 'react';
+import ReactPlayer from 'react-player';
 
 const AdministrationPlaylist = () => {
-  
+
   const [formData, setFormData] = useState({
     name: '',
     url: '',
@@ -24,7 +25,7 @@ const AdministrationPlaylist = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:3001/api/videos', { 
+      const response = await fetch('http://localhost:3001/api/videos', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -45,6 +46,7 @@ const AdministrationPlaylist = () => {
         url: '',
         user: localStorage.getItem("Id")
       });
+      fetchData();
     } catch (error) {
       console.error('Error creating playlist:', error);
       setError('Error creating playlist. Please try again later.');
@@ -58,7 +60,6 @@ const AdministrationPlaylist = () => {
       });
       if (!response.ok) {
         throw new Error('Error deleting video');
-       
       }
       setVideos(prevVideos => prevVideos.filter(video => video._id !== id));
     } catch (error) {
@@ -67,21 +68,21 @@ const AdministrationPlaylist = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`http://localhost:3001/api/videos?id=${localStorage.getItem("Id")}`);
-        if (!response.ok) {
-          throw new Error('Error fetching videos');
-        }
-        const data = await response.json();
-        setVideos(data);
-      } catch (error) {
-        console.error('Error fetching videos:', error);
-        setError('Error fetching videos. Please try again later.');
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`http://localhost:3001/api/videos?id=${localStorage.getItem("Id")}`);
+      if (!response.ok) {
+        throw new Error('Error fetching videos');
       }
-    };
+      const data = await response.json();
+      setVideos(data);
+    } catch (error) {
+      console.error('Error fetching videos:', error);
+      setError('Error fetching videos. Please try again later.');
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -100,7 +101,13 @@ const AdministrationPlaylist = () => {
         {videos.map(video => (
           <li key={video._id}>
             <p>Name: {video.name}</p>
-            <p>URL: {video.url}</p>
+            <div>
+              <ReactPlayer
+                url={video.url}
+                loop
+                controls
+              />
+            </div>
             <button onClick={() => handleDelete(video._id)}>Delete</button>
           </li>
         ))}

@@ -1,65 +1,80 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Navigate } from 'react-router-dom';
+import './Kids'
+import './Home.css';
+import Kids from './Kids';
 
 const Home = () => {
-  const [children, setChildren] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [adminKids, setAdminKids] = useState(false);
+  const [modalContent, setModalContent] = useState('');
   const [pin, setPin] = useState('');
-  const [error, setError] = useState('');
+  const [loggedForKids, setLoggedForKids] = useState(false);
+  const [loggedForPlay, setLoggedForPlay] = useState(false);
 
-  const fetchChildren = async () => {
-    try {
-      const response = await fetch(`http://localhost:3001/api/childrens?id=${localStorage.getItem("Id")}`);
-      if (!response.ok) {
-        throw new Error('Error fetching children');
-      }
-      const data = await response.json();
-      setChildren(data);
-    } catch (error) {
-      console.error('Error fetching children:', error);
-    }
+  const openModal = (content, type) => {
+    setModalContent(content);
+    setAdminKids(type);
+    setShowModal(true);
   };
 
-  useEffect(() => {
-    fetchChildren();
-  }, []);
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
-  const handleLogin = async (childId) => {
+
+  const handleSubmit = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/api/childrenLogin?id=${childId}&pin=${pin}`);
-      if (!response.ok) {
-        throw new Error('Error logging in child');
-      }
+      const response = await fetch(`http://localhost:3001/api/userLogin?_id=${localStorage.getItem("Id")}&pin=${pin}`);
       const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Error logging in child');
+      }
+
       console.log('Child logged in successfully:', data);
-      setError('');
-    } catch (error) {
-      console.error('Error logging in child:', error);
-      setError('Error logging in child. Please try again later.');
-    }
-  };
 
+      closeModal();
+
+      if (adminKids) {
+        setLoggedForKids(true);
+      } else {
+        setLoggedForPlay(true);
+      }
+
+
+    } catch (error) {
+      console.error('Error logging in child:', error.message);
+    };
+
+  }
+  if (loggedForKids) {
+    return <Navigate to="/adminKids" />;
+  }
+  if (loggedForPlay) {
+    return <Navigate to="/adminPlaylist" />;
+  }
   return (
     <div>
       <h1>Home</h1>
-      <Link to="/adminKids"><button>Administration Kids</button></Link>
-      <Link to="/adminPlaylist"><button>Administration Playlist</button></Link>
-      <ul>
-        {children.map(child => (
-          <li key={child._id}>
-            <p>Name: {child.name}</p>
-            <p>PIN: {child.pin}</p>
-            <p>Avatar: {child.avatar}</p>
-            <input 
-              type="text" 
-              placeholder="Enter PIN" 
-              value={pin} 
-              onChange={(e) => setPin(e.target.value)} 
+      <button onClick={() => openModal('Enter your pin', true)}>Administration Kids</button>
+      <button onClick={() => openModal('Enter your pin', false)}>Administration Playlist</button>
+      {showModal && (
+        <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="close-button" onClick={closeModal}>Cerrar modal</button>
+            <h2>{modalContent}</h2>
+            <input
+              type="text"
+              value={pin}
+              onChange={(e) => setPin(e.target.value)}
+              placeholder="Ingrese PIN"
             />
-            <button onClick={() => handleLogin(child._id)}>Login</button>
-          </li>
-        ))}
-      </ul>
-      {error && <div className="error-message">{error}</div>}
+            <button onClick={handleSubmit}>Enviar</button>
+          </div>
+        </div>
+      )}
+      <Kids></Kids>
     </div>
   );
 };
