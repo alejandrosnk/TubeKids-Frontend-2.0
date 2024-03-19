@@ -1,57 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import ReactPlayer from 'react-player';
+import { Link } from 'react-router-dom';
+import './AdminPlaylist.css'
 
 const AdministrationPlaylist = () => {
-
-  const [formData, setFormData] = useState({
-    name: '',
-    url: '',
-    user: localStorage.getItem("Id")
-  });
-
-  const [error, setError] = useState('');
-
   const [videos, setVideos] = useState([]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevData => ({
-      ...prevData,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await fetch('http://localhost:3001/api/videos', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
-
-      if (!response.ok) {
-        throw new Error('Error creating playlist');
-      }
-
-      const data = await response.json();
-      console.log('Playlist created successfully:', data);
-      setError('');
-
-      setFormData({
-        name: '',
-        url: '',
-        user: localStorage.getItem("Id")
-      });
-      fetchData();
-    } catch (error) {
-      console.error('Error creating playlist:', error);
-      setError('Error creating playlist. Please try again later.');
-    }
-  };
+  const [error, setError] = useState('');
 
   const handleDelete = async (id) => {
     try {
@@ -66,6 +20,11 @@ const AdministrationPlaylist = () => {
       console.error('Error deleting video:', error);
       setError('Error deleting video. Please try again later.');
     }
+  };
+
+  const handleEdit = (video) => {
+    localStorage.setItem('videoToEdit', JSON.stringify(video));
+    window.location.href = '/editVideo'; 
   };
 
   const fetchData = async () => {
@@ -88,31 +47,28 @@ const AdministrationPlaylist = () => {
 
   return (
     <div className="playlist-container">
-      <h2>Create Playlist</h2>
-      {error && <div className="error-message">{error}</div>}
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="name" placeholder="Name of video *" value={formData.name} onChange={handleChange} required />
-        <input type="text" name="url" placeholder="URL" value={formData.url} onChange={handleChange} required />
-        <button type="submit">Create Playlist</button>
-      </form>
-      <h2>Playlist</h2>
-      {error && <div className="error-message">{error}</div>}
-      <ul>
-        {videos.map(video => (
-          <li key={video._id}>
-            <p>Name: {video.name}</p>
-            <div>
-              <ReactPlayer
-                url={video.url}
-                loop
-                controls
-              />
-            </div>
-            <button onClick={() => handleDelete(video._id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <h2 className="playlist-title">Playlist</h2>
+    <Link to="/createNewVideo" className="playlist-button">Create new video</Link>
+    {error && <div className="error-message">{error}</div>}
+    <ul className="playlist-list">
+      {videos.map(video => (
+        <li key={video._id} className="playlist-item">
+          <p className="video-name">Name: {video.name}</p>
+          <div className="video-player">
+            <ReactPlayer
+              url={video.url}
+              loop
+              controls
+            />
+          </div>
+          <div className="video-controls">
+            <button className="video-delete" onClick={() => handleDelete(video._id)}>Delete</button>
+            <button className="video-edit" onClick={() => handleEdit(video)}>Edit</button>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
   );
 };
 

@@ -57,17 +57,19 @@ const Kids = () => {
 
   return (
     <div>
-      <ul>
+      <ul className="child-list">
         {children.map(child => (
-          <li key={child._id}>
-            <p>Name: {child.name}</p>
-            <p>PIN: {child.pin}</p>
+          <li className="child-item" key={child._id}>
             <img
+              className="child-avatar"
               src={child.avatar}
               alt='avatar'
               onClick={() => openModal(child._id)}
-            ></img>
-            <p>Age: {child.age}</p>
+            />
+            <div className="child-details">
+              <p className="child-name">Name: {child.name}</p>
+              <p className="child-age">Age: {child.age}</p>
+            </div>
           </li>
         ))}
       </ul>

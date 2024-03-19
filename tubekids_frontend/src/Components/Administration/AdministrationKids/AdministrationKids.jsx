@@ -3,7 +3,6 @@ import './Modal.css';
 import { Link } from 'react-router-dom';
 
 const AdministrationKids = () => {
-
   const [children, setChildren] = useState([]);
 
   const fetchChildren = async () => {
@@ -34,6 +33,12 @@ const AdministrationKids = () => {
     }
   };
 
+  // Función para guardar los datos del niño seleccionado en el localStorage y redirigir a la página de edición
+  const handleEdit = (child) => {
+    localStorage.setItem('childToEdit', JSON.stringify(child)); // Guardar los datos del niño en el localStorage
+    window.location.href = '/createEditProfile'; // Redirigir a la página de edición
+  };
+
   useEffect(() => {
     fetchChildren();
   }, []);
@@ -44,17 +49,21 @@ const AdministrationKids = () => {
       <Link to="/createNewProfile">
         <button>Create new profile</button>
       </Link>
-      <ul>
+      <ul className="child-list">
         {children.map(child => (
-          <li key={child._id}>
-            <p>Name: {child.name}</p>
-            <p>PIN: {child.pin}</p>
-            <img src={child.avatar} alt='avatar'></img>
-            <p>Age: {child.age}</p>
+          <li className="child-item" key={child._id}>
+            <img
+              className="child-avatar"
+              src={child.avatar}
+              alt='avatar'
+            />
+            <div className="child-details">
+              <p className="child-name">Name: {child.name}</p>
+              <p className="child-age">Age: {child.age}</p>
+              <p className="child-pin">PIN: {child.pin}</p>
+            </div>
             <button onClick={() => handleDelete(child._id)}>Delete</button>
-            <Link to="/createEditProfile">
-              <button>Edit profile</button>
-            </Link>
+            <button onClick={() => handleEdit(child)}>Edit profile</button>
           </li>
         ))}
       </ul>

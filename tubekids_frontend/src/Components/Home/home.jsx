@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import './Kids'
-import './Home.css';
+import './Home.css'; // Asegúrate de importar el archivo CSS correctamente
 import Kids from './Kids';
 
 const Home = () => {
@@ -22,7 +21,6 @@ const Home = () => {
     setShowModal(false);
   };
 
-
   const handleSubmit = async () => {
     try {
       const response = await fetch(`http://localhost:3001/api/userLogin?_id=${localStorage.getItem("Id")}&pin=${pin}`);
@@ -41,24 +39,24 @@ const Home = () => {
       } else {
         setLoggedForPlay(true);
       }
-
-
     } catch (error) {
       console.error('Error logging in child:', error.message);
-    };
+    }
+  };
 
-  }
   if (loggedForKids) {
     return <Navigate to="/adminKids" />;
   }
   if (loggedForPlay) {
     return <Navigate to="/adminPlaylist" />;
   }
+
   return (
-    <div>
-      <h1>Home</h1>
-      <button onClick={() => openModal('Enter your pin', true)}>Administration Kids</button>
-      <button onClick={() => openModal('Enter your pin', false)}>Administration Playlist</button>
+    <div >
+      <div className="admin-buttons">
+        <button onClick={() => openModal('Enter your pin', true)}>Administration Kids</button>
+        <button onClick={() => openModal('Enter your pin', false)}>Administration Playlist</button>
+      </div>
       {showModal && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>

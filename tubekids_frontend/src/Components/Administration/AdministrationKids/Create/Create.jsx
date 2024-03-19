@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import { Navigate } from 'react-router-dom';
+import './Create.css'
 
 const Create = () => {
     const [formData, setFormData] = useState({
@@ -13,11 +14,16 @@ const Create = () => {
       const [selectedAvatar, setSelectedAvatar] = useState('');
       const [error, setError] = useState('');
       const [isOpen, setIsOpen] = useState(false); 
-      const imageLinks = [
+      const [imageLinks] = useState([
         'https://cdn-icons-png.freepik.com/256/1326/1326418.png?ga=GA1.1.74766830.1710471239&',
         'https://cdn-icons-png.freepik.com/256/1326/1326412.png?ga=GA1.1.74766830.1710471239&',
-        'https://cdn-icons-png.freepik.com/256/1326/1326405.png?ga=GA1.1.74766830.1710471239&'
-      ];
+        'https://cdn-icons-png.freepik.com/256/1326/1326405.png?ga=GA1.1.74766830.1710471239&',
+        'https://cdn-icons-png.freepik.com/256/1675/1675908.png?ga=GA1.1.74766830.1710471239&',
+        'https://cdn-icons-png.freepik.com/256/4322/4322991.png?ga=GA1.1.74766830.1710471239&',
+        'https://cdn-icons-png.freepik.com/256/5189/5189327.png?ga=GA1.1.74766830.1710471239&',
+        'https://cdn-icons-png.freepik.com/256/5094/5094283.png?ga=GA1.1.74766830.1710471239&',
+        'https://cdn-icons-png.freepik.com/256/1805/1805835.png?ga=GA1.1.74766830.1710471239&'
+      ]);
       const handleImageClick = (imageLink) => {
         setSelectedAvatar(imageLink);
         setFormData(prevData => ({
@@ -76,26 +82,27 @@ const Create = () => {
     
 
     return (
-        <>
-            <h2>Create Child</h2>
-            {error && <div className="error-message">{error}</div>}
-            <form onSubmit={handleSubmit}>
-                <input type="text" name="name" placeholder="Name *" value={formData.name} onChange={(e) => setFormData(prevData => ({ ...prevData, name: e.target.value }))} required />
-                <input type="text" name="pin" placeholder="PIN *" value={formData.pin} onChange={(e) => setFormData(prevData => ({ ...prevData, pin: e.target.value }))} required />
-                {selectedAvatar && <img src={selectedAvatar} alt="Selected Avatar" />}
-                <button type="button" onClick={openModal}>Select Avatar</button>
-                <input type="number" name="age" placeholder="Age *" value={formData.age} onChange={(e) => setFormData(prevData => ({ ...prevData, age: e.target.value }))} required />
-                <button type="submit">Create Child</button>
-            </form>
-            {isOpen && (
+      <>
+      <h2 className="create-title">Create new profile</h2>
+      {error && <div className="error-message">{error}</div>}
+      <form className="create-form" onSubmit={handleSubmit}>
+        <input className="create-input" type="text" name="name" placeholder="Name *" value={formData.name} onChange={(e) => setFormData(prevData => ({ ...prevData, name: e.target.value }))} required />
+        <input className="create-input" type="text" name="pin" placeholder="PIN *" value={formData.pin} onChange={(e) => setFormData(prevData => ({ ...prevData, pin: e.target.value }))} required />
+        {selectedAvatar && <img className="create-avatar" src={selectedAvatar} alt="Selected Avatar" />}
+        <button className="create-button" type="button" onClick={openModal}>Select Avatar</button>
+        <input className="create-input" type="number" name="age" placeholder="Age *" value={formData.age} onChange={(e) => setFormData(prevData => ({ ...prevData, age: e.target.value }))} required />
+        <button className="create-button" type="submit">Create Child</button>
+      </form>
+      {isOpen && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <button className="close-button" onClick={closeModal}>Cerrar modal</button>
-            <h2>Seleccionar imagen para el avatar</h2>
+            <h2>Select image for avatar</h2>
             <div className="image-container">
               {imageLinks.map((imageLink, index) => (
                 <img
                   key={index}
+                  className="create-avatar"
                   src={imageLink}
                   alt={`Imagen ${index + 1}`}
                   onClick={() => handleImageClick(imageLink)}
@@ -105,7 +112,8 @@ const Create = () => {
           </div>
         </div>
       )}
-        </>
+    </>
+    
     )
 }
 
