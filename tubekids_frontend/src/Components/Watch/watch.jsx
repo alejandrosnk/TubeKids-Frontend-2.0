@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactPlayer from 'react-player';
+import Nav from '../Navs/NavKids/NavKids';
 
 const Watch = () => {
 
@@ -24,6 +25,7 @@ const Watch = () => {
 
   return (
     <div>
+      <Nav></Nav>
       <ul>
         {videos.map(video => (
           <li key={video._id}>

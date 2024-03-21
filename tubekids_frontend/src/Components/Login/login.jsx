@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
-import Register from '../Register/Register';
-import './Login.css'; 
+import { Navigate, Link } from 'react-router-dom';
+import './Login.css';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -54,22 +53,29 @@ const Login = () => {
   };
 
   if (loggedIn) {
-    return <Navigate to="/home" />; 
+    return <Navigate to="/home" />;
   }
 
   return (
-    <div className="container"> 
-      <div className="form-container"> 
-        <h2>Login</h2>
-        {error && <div className="error-message">{error}</div>}
-        <form onSubmit={handleSubmit}>
+    <>
+    <div className="wrapper">
+      {error && <div className="error-message">{error}</div>}
+      <form onSubmit={handleSubmit}>
+        <h1>Sign in</h1>
+        <div className='input-box'>
           <input className='input' type="email" name="email" placeholder="Email *" value={formData.email} onChange={handleChange} required />
+        </div>
+        <div className='input-box'>
           <input className='input' type="password" name="password" placeholder="Password *" value={formData.password} onChange={handleChange} required />
-          <button type="submit">Login</button>
-        </form>
-      </div>
-      <Register />
+        </div>
+        <button className='button' type="submit">Login</button>
+        
+        <div className='register-link'>
+              <Link to="/register" className="playlist-button">Sign up</Link>
+        </div>
+      </form>
     </div>
+    </>
   );
 };
 

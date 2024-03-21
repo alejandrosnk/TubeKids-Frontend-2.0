@@ -80,19 +80,43 @@ const Register = () => {
   }
 
   return (
-    <div id="register-container">
-      <h2 className="register-title">Create User</h2>
+    <div className="wrappers">
       {error && <div className="error-message">{error}</div>}
       <form className="register-form" onSubmit={handleSubmit}>
-        <input type="email" className="register-input" name="email" placeholder="Email *" value={formData.email} onChange={handleChange} required />
-        <input type="password" className="register-input" name="password" placeholder="Password *" value={formData.password} onChange={handleChange} required />
-        <input type="password" className="register-input" name="repeatPassword" placeholder="Repeat Password" value={formData.repeatPassword} onChange={handleChange} required />
-        <input type="text" className="register-input" name="pin" placeholder="PIN (6 digits) *" value={formData.pin} onChange={handleChange} required />
-        <input type="text" className="register-input" name="name" placeholder="Name *" value={formData.name} onChange={handleChange} required />
-        <input type="text" className="register-input" name="lastname" placeholder="Lastname *" value={formData.lastname} onChange={handleChange} required />
-        <input type="text" className="register-input" name="country" placeholder="Country" value={formData.country} onChange={handleChange} />
-        <input type="date" className="register-input" name="fechaNacimiento" placeholder="Fecha de Nacimiento *" value={formData.fechaNacimiento} onChange={handleChange} required />
-        <button type="submit" className="register-button">Create User</button>
+        <h2 className="register-title">Create User</h2>
+        <div className="input-row">
+          <div className='input-box'>
+            <input type="email" className="register-input" name="email" placeholder="Email *" value={formData.email} onChange={handleChange} required />
+          </div>
+          <div className='input-box'>
+            <input type="password" className="register-input" name="password" placeholder="Password *" value={formData.password} onChange={handleChange} required />
+          </div>
+        </div>
+        <div className="input-row">
+          <div className='input-box'>
+            <input type="password" className="register-input" name="repeatPassword" placeholder="Repeat Password" value={formData.repeatPassword} onChange={handleChange} required />
+          </div>
+          <div className='input-box'>
+            <input type="text" className="register-input" name="pin" placeholder="PIN (6 digits) *" value={formData.pin} onChange={handleChange} required />
+          </div>
+        </div>
+        <div className="input-row">
+          <div className='input-box'>
+            <input type="text" className="register-input" name="name" placeholder="Name *" value={formData.name} onChange={handleChange} required />
+          </div>
+          <div className='input-box'>
+            <input type="text" className="register-input" name="lastname" placeholder="Lastname *" value={formData.lastname} onChange={handleChange} required />
+          </div>
+        </div>
+        <div className="input-row">
+          <div className='input-box'>
+            <input type="text" className="register-input" name="country" placeholder="Country" value={formData.country} onChange={handleChange} />
+          </div>
+          <div className='input-box'>
+            <input type="date" className="register-input" name="fechaNacimiento" placeholder="Fecha de Nacimiento *" value={formData.fechaNacimiento} onChange={handleChange} required />
+          </div>
+        </div>
+        <button type="submit" className="button">Create User</button>
       </form>
     </div>
   );

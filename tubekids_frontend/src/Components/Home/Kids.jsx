@@ -56,12 +56,12 @@ const Kids = () => {
   }
 
   return (
-    <div>
-      <ul className="child-list">
+    <div className="child-list-container">
+      <div className="child-container">
         {children.map(child => (
-          <li className="child-item" key={child._id}>
+          <div className="child-card" key={child._id}>
             <img
-              className="child-avatar"
+              className="child-avatar" 
               src={child.avatar}
               alt='avatar'
               onClick={() => openModal(child._id)}
@@ -70,26 +70,31 @@ const Kids = () => {
               <p className="child-name">Name: {child.name}</p>
               <p className="child-age">Age: {child.age}</p>
             </div>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
       {isOpen && (
         <div className="modal-overlay" onClick={closeModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-button" onClick={closeModal}>Cerrar modal</button>
-            <h2>Iniciar sesión</h2>
+          <div className="modal-contents" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>Type your pin</h2>
+              <button className="close" onClick={closeModal}>Cerrar modal</button>
+            </div>
+            <div className="modal-header">
             <input
               type="text"
               placeholder="Ingrese PIN"
               value={pin}
               onChange={(e) => setPin(e.target.value)}
             />
-            <button onClick={handleLogin}>Enviar</button>
+            <button className="login-button" onClick={handleLogin}>Enviar</button>
+            </div>
           </div>
         </div>
       )}
     </div>
   );
+  
 };
 
 export default Kids;

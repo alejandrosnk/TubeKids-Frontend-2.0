@@ -44,14 +44,18 @@ const AdministrationKids = () => {
   }, []);
 
   return (
-    <div className="children-container">
-      <h2>Children</h2>
+    <div >
+      
+      <Link className='buttonh' to="/" >Log out</Link>
+      <Link className='buttonh' to="/home" >Home</Link>
       <Link to="/createNewProfile">
-        <button>Create new profile</button>
+        <button className='buttonh'>Create new profile</button>
       </Link>
-      <ul className="child-list">
+      <h2>Children</h2>
+      <div className="child-list-containe">
+      <div className="child-container">
         {children.map(child => (
-          <li className="child-item" key={child._id}>
+          <div className="child-card" key={child._id}>
             <img
               className="child-avatar"
               src={child.avatar}
@@ -60,13 +64,14 @@ const AdministrationKids = () => {
             <div className="child-details">
               <p className="child-name">Name: {child.name}</p>
               <p className="child-age">Age: {child.age}</p>
-              <p className="child-pin">PIN: {child.pin}</p>
             </div>
-            <button onClick={() => handleDelete(child._id)}>Delete</button>
-            <button onClick={() => handleEdit(child)}>Edit profile</button>
-          </li>
+            <button className='kid-button-del' onClick={() => handleDelete(child._id)}>Delete</button>
+            <button className='kid-button-upd' onClick={() => handleEdit(child)}>Edit profile</button>
+          </div>
+          
         ))}
-      </ul>
+      </div>
+    </div>
     </div>
   );
 };

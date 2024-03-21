@@ -60,18 +60,22 @@ const Update = () => {
 
   return (
     <>
-    <div className="centered-box">
-      <h2 className="edit-video-title">Edit Video</h2>
+    <div className="wrapper">
+      <h2>Edit Video</h2>
       {error && <div className="error-message">{error}</div>}
-      <form className="edit-video-form" onSubmit={handleSubmit}>
-        <input className="edit-video-input" type="text" name="name" placeholder="Name *" value={formData.name} onChange={handleChange} required />
-        <input className="edit-video-input" type="url" name="url" placeholder="URL" value={formData.url} onChange={handleChange} required />
-        <button className="edit-video-button" type="submit">Update Video</button>
+      <form  onSubmit={handleSubmit}>
+      <div className='input-box'>
+        <input className="input" type="text" name="name" placeholder="Name *" value={formData.name} onChange={handleChange} required />
+        </div>
+        <div className='input-box'>
+        <input className="input" type="url" name="url" placeholder="URL" value={formData.url} onChange={handleChange} required />
+        </div>
+        <button className="button" type="submit">Update Video</button>
       </form>
       </div>
     </>
 
-  );
+  ); 
 };
 
 export default Update;

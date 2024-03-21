@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
 import './Home.css'; // Asegúrate de importar el archivo CSS correctamente
 import Kids from './Kids';
 
@@ -53,25 +53,34 @@ const Home = () => {
 
   return (
     <div >
-      <div className="admin-buttons">
-        <button onClick={() => openModal('Enter your pin', true)}>Administration Kids</button>
-        <button onClick={() => openModal('Enter your pin', false)}>Administration Playlist</button>
-      </div>
+      <nav>
+        <Link className='buttonh' to="/" >Log out</Link>
+        <button className='buttonh' onClick={() => openModal('Enter your pin', true)}>Administration Kids</button>
+        <button className='buttonh' onClick={() => openModal('Enter your pin', false)}>Administration Playlist</button>
+
+        <div class="animation start-home"></div>
+      </nav>
+
+        
       {showModal && (
         <div className="modal-overlay" onClick={closeModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-button" onClick={closeModal}>Cerrar modal</button>
-            <h2>{modalContent}</h2>
+          <div className="modal-contents" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>{modalContent}</h2>
+              <button className="close" onClick={closeModal}>Cerrar modal</button>
+            </div>
             <input
               type="text"
               value={pin}
               onChange={(e) => setPin(e.target.value)}
               placeholder="Ingrese PIN"
             />
-            <button onClick={handleSubmit}>Enviar</button>
+            <button className="login-button" onClick={handleSubmit}>Enviar</button>
           </div>
         </div>
+
       )}
+
       <Kids></Kids>
     </div>
   );

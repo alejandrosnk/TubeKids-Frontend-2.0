@@ -24,7 +24,7 @@ const AdministrationPlaylist = () => {
 
   const handleEdit = (video) => {
     localStorage.setItem('videoToEdit', JSON.stringify(video));
-    window.location.href = '/editVideo'; 
+    window.location.href = '/editVideo';
   };
 
   const fetchData = async () => {
@@ -47,28 +47,30 @@ const AdministrationPlaylist = () => {
 
   return (
     <div className="playlist-container">
-    <h2 className="playlist-title">Playlist</h2>
-    <Link to="/createNewVideo" className="playlist-button">Create new video</Link>
-    {error && <div className="error-message">{error}</div>}
-    <ul className="playlist-list">
-      {videos.map(video => (
-        <li key={video._id} className="playlist-item">
-          <p className="video-name">Name: {video.name}</p>
-          <div className="video-player">
-            <ReactPlayer
-              url={video.url}
-              loop
-              controls
-            />
-          </div>
-          <div className="video-controls">
-            <button className="video-delete" onClick={() => handleDelete(video._id)}>Delete</button>
-            <button className="video-edit" onClick={() => handleEdit(video)}>Edit</button>
-          </div>
-        </li>
-      ))}
-    </ul>
-  </div>
+      <Link className='buttonh' to="/" >Log out</Link>
+      <Link className='buttonh' to="/home" >Home</Link>
+      <Link to="/createNewVideo" className="buttonh">Create new video</Link>
+      <h2 className="playlist-title">Playlist</h2>
+      {error && <div className="error-message">{error}</div>}
+      <ul className="playlist-list">
+        {videos.map(video => (
+          <li key={video._id} className="playlist-item">
+            <p className="video-name">Name: {video.name}</p>
+            <div className="video-player">
+              <ReactPlayer
+                url={video.url}
+                loop
+                controls
+              />
+            </div>
+            <div className="video-controls">
+              <button className="video-delete" onClick={() => handleDelete(video._id)}>Delete</button>
+              <button className="video-edit" onClick={() => handleEdit(video)}>Edit</button>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 

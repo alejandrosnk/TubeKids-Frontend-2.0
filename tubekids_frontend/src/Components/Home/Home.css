@@ -34,7 +34,7 @@
 }
 
 /* Estilos para los botones */
-button {
+.buttonh {
   margin: 10px 10px 0 0; /* Añade espacio entre los botones */
   padding: 10px 20px;
   border: none;
@@ -43,9 +43,10 @@ button {
   cursor: pointer;
   background-color: #007bff;
   color: #fff;
+  text-decoration: none;
 }
 
-button:hover {
+.buttonh:hover {
   background-color: #0056b3;
 }
 
@@ -64,8 +65,4 @@ button:hover {
   background-color: #218838;
 }
 
-.admin-buttons {
-  position: absolute;
-  top: 20px; /* Ajusta la distancia desde la parte superior de la pantalla según sea necesario */
-  right: 20px; /* Ajusta la distancia desde el borde derecho de la pantalla según sea necesario */
-}
+
