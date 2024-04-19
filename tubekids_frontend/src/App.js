@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import Login from './Components/Login/login'
 import PreLogin from './Components/Login/PreLogin'
+import PinLogin from './Components/Login/LoginPin'
 import Register from './Components/Register/Register'
 import Home from './Components/Home/home'
 import Watch from './Components/Watch/watch'
@@ -16,6 +17,7 @@ function App() {
       <Routes>
       <Route path="/" element={<Register/>}/>
           <Route path="/login" element={<Login/> } />
+          <Route path="/loginpin" element={<PinLogin/> } />
           <Route path="/prelogin" element={<PreLogin/> } />
           <Route path="/home" element={<Home/>}/>
           <Route path="/watch" element={<Watch/>}/>
