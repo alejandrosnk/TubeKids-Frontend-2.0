@@ -1,12 +1,31 @@
-import { useState } from 'react';
+import { useState} from 'react';
 import { Navigate, Link } from 'react-router-dom';
 import './Login.css';
 
 const Login = () => {
+  const userId=localStorage.getItem("Id");
+  const save=localStorage.getItem("Save");
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
+  const Activate = () => {
+  fetch(`http://localhost:3001/api/users?id=${userId}`, {
+      method: 'PATCH', // Método HTTP para actualizar el usuario
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to activate user');
+        }
+        return response.json();
+      })
+      .then(data => {
+        // Aquí puedes hacer algo con la respuesta del servidor, como actualizar el estado de tu aplicación o mostrar un mensaje de éxito.
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    };
 
   const [error, setError] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
@@ -51,6 +70,10 @@ const Login = () => {
       setError('Error logging in. Please try again.');
     }
   };
+  if (save) {
+    Activate();
+    localStorage.removeItem("Save")
+  }
 
   if (loggedIn) {
     return <Navigate to="/home" />;

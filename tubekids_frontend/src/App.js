@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import Login from './Components/Login/login'
+import PreLogin from './Components/Login/PreLogin'
 import Register from './Components/Register/Register'
 import Home from './Components/Home/home'
 import Watch from './Components/Watch/watch'
@@ -13,9 +14,10 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Login/> } />
+      <Route path="/" element={<Register/>}/>
+          <Route path="/login" element={<Login/> } />
+          <Route path="/prelogin" element={<PreLogin/> } />
           <Route path="/home" element={<Home/>}/>
-          <Route path="/register" element={<Register/>}/>
           <Route path="/watch" element={<Watch/>}/>
           <Route path="/createNewProfile" element={<CreateNewProfile/>}/>
           <Route path="/CreateEditProfile" element={<CreateEditProfile/>}/>

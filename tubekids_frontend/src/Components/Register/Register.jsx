@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom';
 import './Register.css'
 
 const Register = () => {
+  const[to,setTo]=useState("");
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -11,7 +12,9 @@ const Register = () => {
     name: '',
     lastname: '',
     country: '',
-    fechaNacimiento: ''
+    fechaNacimiento: '',
+    telefono: "+50660609419",
+    status: 'Inactivo'
   });
   const [loggedIn, setLoggedIn] = useState(false);
   const [error, setError] = useState('');
@@ -24,10 +27,25 @@ const Register = () => {
     }));
   };
 
+  const sendEmailTo = async (to) => {
+    try {
+      const response = await fetch('http://localhost:3001/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          to
+        })
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error('Error al enviar el correo electrónico:', error);
+    }
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Validación de la contraseña
     if (formData.password !== formData.repeatPassword) {
       setError('Las contraseñas no coinciden');
       return;
@@ -38,7 +56,6 @@ const Register = () => {
       setError('El PIN debe tener exactamente 6 dígitos');
       return;
     }
-
     try {
       const response = await fetch('http://localhost:3001/api/users', {
         method: 'POST',
@@ -51,15 +68,16 @@ const Register = () => {
       if (!response.ok) {
         throw new Error('Error creating user');
       }
-
       const data = await response.json();
       console.log(formData);
       console.log('User registered successfully:', data);
       localStorage.setItem("Name", data.name);
       localStorage.setItem("Id", data._id);
+      setTo(data.email);
       setLoggedIn(true);
       setError('');
-
+      localStorage.setItem("Save",true);
+      
       setFormData({
         email: '',
         password: '',
@@ -68,15 +86,18 @@ const Register = () => {
         name: '',
         lastname: '',
         country: '',
-        fechaNacimiento: ''
-      }); 
+        fechaNacimiento: '',
+        telefono: "+50660609419",
+        status: 'Inactivo'
+      });
     } catch (error) {
       console.error('Error registering user:', error);
       setError('Error registering user. Please try again later.');
     }
   };
   if (loggedIn) {
-    return <Navigate to="/home" />; 
+    sendEmailTo(to);
+    return <Navigate to="/prelogin" />;
   }
 
   return (
