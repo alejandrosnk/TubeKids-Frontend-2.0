@@ -6,6 +6,9 @@ import Register from './Components/Register/Register'
 import Home from './Components/Home/home'
 import Watch from './Components/Watch/watch'
 import CreateNewProfile from './Components/Administration/AdministrationKids/Create/Create'
+import AdministrationCollection from './Components/Administration/AdministrationCollections/AdiministrationCollection'
+import CreateCollection from './Components/Administration/AdministrationCollections/Create/Create'
+import UpdateCollection from './Components/Administration/AdministrationCollections/Update/Update'
 import CreateEditProfile from './Components/Administration/AdministrationKids/Update/Update'
 import CreateNewVideo from './Components/Administration/AdministrationPlaylist/Create/Create'
 import EditVideo from './Components/Administration/AdministrationPlaylist/Update/Update'
@@ -22,11 +25,14 @@ function App() {
           <Route path="/home" element={<Home/>}/>
           <Route path="/watch" element={<Watch/>}/>
           <Route path="/createNewProfile" element={<CreateNewProfile/>}/>
+          <Route path="/createCollection" element={<CreateCollection/>}/>
           <Route path="/CreateEditProfile" element={<CreateEditProfile/>}/>
           <Route path="/createNewVideo" element={<CreateNewVideo/>}/>
           <Route path="/editVideo" element={<EditVideo/>}/>
           <Route path="/adminKids" element={<AdministrationKids/>}/>
+          <Route path="/editCollection" element={<UpdateCollection/>}/>
           <Route path="/adminPlaylist" element={<AdministrationPlaylist/>}/>
+          <Route path="/adminCollection" element={<AdministrationCollection/>}/>
       </Routes>
     </div>
   );

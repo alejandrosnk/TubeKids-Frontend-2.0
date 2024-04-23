@@ -119,9 +119,6 @@ const Login = () => {
           <input className='input' type="password" name="password" placeholder="Password *" value={formData.password} onChange={handleChange} required />
         </div>
         <button className='button' type="submit">Login</button>
-        {/* <div className='register-link'>
-              <Link to="/register" className="playlist-button">Sign up</Link>
-        </div> */}
       </form>
     </div>
     </>
