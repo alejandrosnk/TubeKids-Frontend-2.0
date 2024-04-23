@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import './Create.css'
 
@@ -6,7 +6,13 @@ const Create = () => {
   const [formData, setFormData] = useState({
     name: '',
     url: '',
-    user: localStorage.getItem("Id")
+    collection: localStorage.getItem("IDcollection")
+  });
+
+  const [change, setChange] = useState({
+    name: '',
+    user: '',
+    videos: 0
   });
 
   const [isCreated, setIsCreated] = useState(false);
@@ -50,11 +56,42 @@ const Create = () => {
       console.error('Error creating playlist:', error);
       setError('Error creating playlist. Please try again later.');
     }
+
+    try {
+      const response = await fetch(`http://localhost:3001/api/collections?id=${localStorage.getItem("IDcollection")}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(change)
+      });
+      if (!response.ok) {
+        throw new Error('Error updating video');
+      }
+    } catch (error) {
+      console.error('Error updating video:', error);
+      console.log('Error updating video. Please try again later.');
+    }
   };
 
+  useEffect(() => {
+    save();
+}, []);
+
   if (isCreated) {
-    return <Navigate to="/adminPlaylist" />;
+    return <Navigate to="/editCollection" />;
   }
+
+  const save = async () => {
+    const colData =await JSON.parse(localStorage.getItem('List'));
+    if (colData) {
+      setChange({
+        name: colData.name,
+        user: colData.user,
+        videos: colData.videos + 1
+      });
+    }
+  };
 
   return (
     <div className="wrapper">
@@ -63,15 +100,15 @@ const Create = () => {
         <h1 >Create video</h1>
 
         <div className='input-box'>
-        <input className="input" type="text" name="name" placeholder="Name of video *" value={formData.name} onChange={handleChange} required />
+          <input className="input" type="text" name="name" placeholder="Name of video *" value={formData.name} onChange={handleChange} required />
         </div>
 
         <div className='input-box'>
-        <input className="input" type="text" name="url" placeholder="URL" value={formData.url} onChange={handleChange} required />
+          <input className="input" type="text" name="url" placeholder="URL" value={formData.url} onChange={handleChange} required />
         </div>
         <button className="button" type="submit">Create Playlist</button>
       </form>
-    </div> 
+    </div>
 
 
   )

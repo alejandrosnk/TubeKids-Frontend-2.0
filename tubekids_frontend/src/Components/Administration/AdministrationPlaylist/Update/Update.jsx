@@ -55,7 +55,7 @@ const Update = () => {
   };
 
   if (isEdit) {
-    return <Navigate to="/adminPlaylist" />;
+    return <Navigate to="/adminCollection" />;
   }
 
   return (

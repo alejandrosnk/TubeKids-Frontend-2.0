@@ -49,7 +49,6 @@ const AdministrationPlaylist = () => {
     <div className="playlist-container">
       <Link className='buttonh' to="/" >Log out</Link>
       <Link className='buttonh' to="/home" >Home</Link>
-      <Link to="/createNewVideo" className="buttonh">Create new video</Link>
       <h2 className="playlist-title">Playlist</h2>
       {error && <div className="error-message">{error}</div>}
       <ul className="playlist-list">

@@ -119,7 +119,7 @@ const Create = () => {
         <div className="wrapper">
             <Link className='buttonh' to="/" >Log out</Link>
             <Link className='buttonh' to="/home" >Home</Link>
-            <Link className='buttonh' to="/adminCollection" >Admistration collections</Link>
+            <Link className='buttonh' to="/adminCollection" >Administration collections</Link>
 
             {error && <div className="error-message">{error}</div>}
             <form onSubmit={handleSubmit}>

@@ -35,7 +35,7 @@ const Home = () => {
 
       closeModal();
 
-      if (adminKids==="Kids") {
+      if (adminKids==="Kid") {
         setLoggedForKids(true);
       } 
       if(adminKids==="Play") {

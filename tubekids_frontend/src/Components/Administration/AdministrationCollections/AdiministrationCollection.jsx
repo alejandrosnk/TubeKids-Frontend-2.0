@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
 const AdiministrationCollection = () => {
 
     const [lists, setLists] = useState([]);
     const [error, setError] = useState('');
+    const [update, setUpdate] = useState(false);
 
     const fetchData = async () => {
         try {
@@ -20,7 +21,7 @@ const AdiministrationCollection = () => {
         }
     };
 
-    const handleDelete = async (id) => {
+    const handleDelete = async (id, collection) => {
         try {
             const response = await fetch(`http://localhost:3001/api/collections?id=${id}`, {
                 method: 'DELETE'
@@ -34,10 +35,21 @@ const AdiministrationCollection = () => {
             setError('Error deleting list. Please try again later.');
         }
     };
+    
+    const handleEdit = async (collection) => {
+        localStorage.setItem("List",  JSON.stringify(collection) );
+        setUpdate(true);
+    }
+    
+
 
     useEffect(() => {
         fetchData();
     }, []);
+    
+    if(update){
+        return <Navigate to="/editCollection" />;
+    }
 
     return (
         <>
@@ -52,8 +64,8 @@ const AdiministrationCollection = () => {
                             <h3>{collection.name}</h3>
                             <p>Videos: {collection.videos}</p>
                             <div className="video-controls">
-                                <button className="video-delete" onClick={() => handleDelete(collection._id)}>Delete</button>
-                                {/* <button className="video-edit" onClick={() => handleEdit(collection)}>Edit</button> */}
+                                <button className="video-delete" onClick={() => handleDelete(collection._id, collection)}>Delete</button>
+                                <button className="video-edit" onClick={() => handleEdit(collection)}>Edit</button>
                             </div>
                         </div>
                     ))}
