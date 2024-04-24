@@ -15,13 +15,14 @@ const Update = () => {
     try {
       const response = await fetch(`http://localhost:3001/api/videos?id=${localStorage.getItem("IDcollection")}`);
       if (!response.ok) {
-        throw new Error('Error fetching videos');
+        throw new Error('Error fetching collections');
       }
+      
       const data = await response.json();
       setVideos(data);
       
     } catch (error) {
-      console.error('Error fetching videos:', error);
+      console.error('Error fetching collections:', error);
     }
   };
   const handleDelete = async (id) => {
@@ -41,7 +42,7 @@ const Update = () => {
       console.log('Error deleting video. Please try again later.');
     }
     try {
-      const response = await fetch(`http://localhost:3001/api/collections?id=${localStorage.getItem("IDcollection")}`, {
+      const response = await fetch(`http://localhost:3001/api/collections?userId=${localStorage.getItem("IDcollection")}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'

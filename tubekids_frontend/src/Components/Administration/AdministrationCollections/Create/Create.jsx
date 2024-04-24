@@ -8,7 +8,8 @@ const Create = () => {
         user: localStorage.getItem("Id"),
         videos: 0
     });
-    const[boy, setBoy]= useState("");
+
+    const [boy, setBoy] = useState("");
 
     const [formDataChild, setFormDataChild] = useState({
         collection: '',
@@ -45,7 +46,7 @@ const Create = () => {
         setBoy(name);
     };
 
-    const AddPerfil = async (id) => {
+    const AddPerfil = async () => {
         try {
             const response = await fetch('http://localhost:3001/api/subs', {
                 method: 'POST',
@@ -119,7 +120,7 @@ const Create = () => {
         <div className="wrapper">
             <Link className='buttonh' to="/" >Log out</Link>
             <Link className='buttonh' to="/home" >Home</Link>
-            <Link className='buttonh' to="/adminCollection" >Administration collections</Link>
+            <Link className='buttonh' to="/adminCollection" >Admin collections</Link>
 
             {error && <div className="error-message">{error}</div>}
             <form onSubmit={handleSubmit}>

@@ -6,6 +6,7 @@ const AdiministrationCollection = () => {
     const [lists, setLists] = useState([]);
     const [error, setError] = useState('');
     const [update, setUpdate] = useState(false);
+    const [manage, setManage] = useState(false);
 
     const fetchData = async () => {
         try {
@@ -21,7 +22,7 @@ const AdiministrationCollection = () => {
         }
     };
 
-    const handleDelete = async (id, collection) => {
+    const handleDelete = async (id) => {
         try {
             const response = await fetch(`http://localhost:3001/api/collections?id=${id}`, {
                 method: 'DELETE'
@@ -38,7 +39,14 @@ const AdiministrationCollection = () => {
     
     const handleEdit = async (collection) => {
         localStorage.setItem("List",  JSON.stringify(collection) );
+        localStorage.setItem("IDcollection",  collection._id );
         setUpdate(true);
+    }
+
+    const handleManageVideos = async (collection) => {
+        localStorage.setItem("List",  JSON.stringify(collection) );
+        localStorage.setItem("IDcollection",  collection._id );
+        setManage(true);
     }
     
 
@@ -49,6 +57,10 @@ const AdiministrationCollection = () => {
     
     if(update){
         return <Navigate to="/editCollection" />;
+    }
+
+    if(manage){
+        return <Navigate to="/manageCollection" />;
     }
 
     return (
@@ -64,8 +76,9 @@ const AdiministrationCollection = () => {
                             <h3>{collection.name}</h3>
                             <p>Videos: {collection.videos}</p>
                             <div className="video-controls">
-                                <button className="video-delete" onClick={() => handleDelete(collection._id, collection)}>Delete</button>
-                                <button className="video-edit" onClick={() => handleEdit(collection)}>Edit</button>
+                                <button className="video-delete" onClick={() => handleDelete(collection._id)}>Delete</button>
+                                <button className="video-edit" onClick={() => handleEdit(collection)}>Manage Videos</button>
+                                <button className="video-edit" onClick={() => handleManageVideos(collection)}>Manage Profiles</button>
                             </div>
                         </div>
                     ))}

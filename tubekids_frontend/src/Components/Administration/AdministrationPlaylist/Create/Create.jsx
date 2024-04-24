@@ -29,7 +29,6 @@ const Create = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await fetch('http://localhost:3001/api/videos', {
         method: 'POST',
@@ -46,17 +45,16 @@ const Create = () => {
       const data = await response.json();
       console.log('Playlist created successfully:', data);
       setError('');
-
+      console.log(formData)
       setFormData({
         name: '',
         url: '',
-        user: localStorage.getItem("Id")
+        collection: localStorage.getItem("IDcollection")
       });
     } catch (error) {
       console.error('Error creating playlist:', error);
       setError('Error creating playlist. Please try again later.');
     }
-
     try {
       const response = await fetch(`http://localhost:3001/api/collections?id=${localStorage.getItem("IDcollection")}`, {
         method: 'PATCH',

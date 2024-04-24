@@ -5,8 +5,10 @@ import PinLogin from './Components/Login/LoginPin'
 import Register from './Components/Register/Register'
 import Home from './Components/Home/home'
 import Watch from './Components/Watch/watch'
+import WatchVideos from './Components/Watch/WatchVideos'
 import CreateNewProfile from './Components/Administration/AdministrationKids/Create/Create'
 import AdministrationCollection from './Components/Administration/AdministrationCollections/AdiministrationCollection'
+import ManageCollection from './Components/Administration/AdministrationCollections/ManageVideos'
 import CreateCollection from './Components/Administration/AdministrationCollections/Create/Create'
 import UpdateCollection from './Components/Administration/AdministrationCollections/Update/Update'
 import CreateEditProfile from './Components/Administration/AdministrationKids/Update/Update'
@@ -24,6 +26,7 @@ function App() {
           <Route path="/prelogin" element={<PreLogin/> } />
           <Route path="/home" element={<Home/>}/>
           <Route path="/watch" element={<Watch/>}/>
+          <Route path="/watchVideos" element={<WatchVideos/>}/>
           <Route path="/createNewProfile" element={<CreateNewProfile/>}/>
           <Route path="/createCollection" element={<CreateCollection/>}/>
           <Route path="/CreateEditProfile" element={<CreateEditProfile/>}/>
@@ -33,6 +36,7 @@ function App() {
           <Route path="/editCollection" element={<UpdateCollection/>}/>
           <Route path="/adminPlaylist" element={<AdministrationPlaylist/>}/>
           <Route path="/adminCollection" element={<AdministrationCollection/>}/>
+          <Route path="/manageCollection" element={<ManageCollection/>}/>
       </Routes>
     </div>
   );

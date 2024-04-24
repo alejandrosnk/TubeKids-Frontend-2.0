@@ -43,6 +43,7 @@ const Kids = () => {
       }
       const data = await response.json();
       console.log('Child logged in successfully:', data);
+      localStorage.setItem("IdChild", data._id)
       setIsOpen(false); 
       setPin("");
       setLogIn(true);
