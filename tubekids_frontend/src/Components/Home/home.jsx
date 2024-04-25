@@ -9,7 +9,6 @@ const Home = () => {
   const [modalContent, setModalContent] = useState('');
   const [pin, setPin] = useState('');
   const [loggedForKids, setLoggedForKids] = useState(false);
-  const [loggedForPlay, setLoggedForPlay] = useState(false);
   const [loggedForCollection, setLoggedForCollection] = useState(false);
 
   const openModal = (content, type) => {
@@ -38,9 +37,6 @@ const Home = () => {
       if (adminKids==="Kid") {
         setLoggedForKids(true);
       } 
-      if(adminKids==="Play") {
-        setLoggedForPlay(true);
-      }
       if(adminKids==="List") {
         setLoggedForCollection(true);
       }
@@ -52,9 +48,7 @@ const Home = () => {
   if (loggedForKids) {
     return <Navigate to="/adminKids" />;
   }
-  if (loggedForPlay) {
-    return <Navigate to="/adminPlaylist" />;
-  }
+
   if (loggedForCollection) {
     return <Navigate to="/adminCollection" />;
   }
@@ -64,11 +58,9 @@ const Home = () => {
       <nav>
         <Link className='buttonh' to="/" >Log out</Link>
         <button className='buttonh' onClick={() => openModal('Enter your pin', "Kid")}>Administration Kids</button>
-        <button className='buttonh' onClick={() => openModal('Enter your pin', "Play")}>Administration Playlist</button>
         <button className='buttonh' onClick={() => openModal('Enter your pin', "List")}>Administration Collection</button>
         <div class="animation start-home"></div>
       </nav>
-
         
       {showModal && (
         <div className="modal-overlay" onClick={closeModal}>

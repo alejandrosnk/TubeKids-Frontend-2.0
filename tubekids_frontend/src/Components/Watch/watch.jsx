@@ -10,11 +10,13 @@ const Watch = () => {
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState(false);
   const [error, setError] = useState(null);
+  
 
   const handleView = async (id) => {
     localStorage.setItem("IdView", id);
     setView(true);
   }
+
 
   const fetchData = async () => {
     fetch('http://localhost:3002/graphql', {
@@ -57,17 +59,18 @@ const Watch = () => {
     return <Navigate to="/watchVideos" />;
   }
 
-  return (      
-      <div className="playlist-container">
-        <Link className='buttonh' to="/home" >Home</Link>
-        {data && data.map(collection => (
-          <div key={collection._id}>
-            <h2>{collection.name}</h2>
-            <p>Videos: {collection.videos}</p>
-            <button className='kid-button-del' onClick={() => handleView(collection._id)}>Watch videos</button>
-          </div>
-        ))}
-      </div>
+  return (
+    <div className="playlist-container">
+      <Link className='buttonh' to="/home" >Home</Link>
+
+      {data && data.map(collection => (
+        <div key={collection._id}>
+          <h2>{collection.name}</h2>
+          <p>Videos: {collection.videos}</p>
+          <button className='kid-button-del' onClick={() => handleView(collection._id)}>Watch videos</button>
+        </div>
+      ))}
+    </div>
   );
 }
 

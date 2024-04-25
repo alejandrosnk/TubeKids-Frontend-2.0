@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
 import './Register.css'
 
 const Register = () => {
@@ -13,7 +13,7 @@ const Register = () => {
     lastname: '',
     country: '',
     fechaNacimiento: '',
-    telefono: "+50660609419",
+    telefono: "",
     status: 'Inactivo'
   });
   const [loggedIn, setLoggedIn] = useState(false);
@@ -87,7 +87,7 @@ const Register = () => {
         lastname: '',
         country: '',
         fechaNacimiento: '',
-        telefono: "+50660609419",
+        telefono: "",
         status: 'Inactivo'
       });
     } catch (error) {
@@ -102,6 +102,7 @@ const Register = () => {
 
   return (
     <div className="wrappers">
+      <Link className='buttonh' to="/login" >Login</Link>
       {error && <div className="error-message">{error}</div>}
       <form className="register-form" onSubmit={handleSubmit}>
         <h2 className="register-title">Create User</h2>
@@ -135,6 +136,12 @@ const Register = () => {
           </div>
           <div className='input-box'>
             <input type="date" className="register-input" name="fechaNacimiento" placeholder="Fecha de Nacimiento *" value={formData.fechaNacimiento} onChange={handleChange} required />
+          </div>
+        </div>
+        <div className="input-row">
+          <div className='input-box'>
+          <input type="tel" className="register-input" name="telefono" placeholder="Teléfono" value={formData.telefono} onChange={handleChange} />
+
           </div>
         </div>
         <button type="submit" className="button">Create User</button>

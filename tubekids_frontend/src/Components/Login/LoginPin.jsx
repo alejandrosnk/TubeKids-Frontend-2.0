@@ -23,12 +23,12 @@ const LoginPin = () => {
 
     return (
         <>
-            <div>
+            <div className="wrapper">
             <form onSubmit={handlePinSubmit}>
                 <div className='input-box'>
                     <input className='input' type="text" placeholder="Pin" value={pin} onChange={handlePinChange} />
                 </div>
-                <button className='buttonpo' type="submit" >Enviar Pin</button>
+                <button className='button' type="submit" >Enviar Pin</button>
             </form>
             </div>
         </>

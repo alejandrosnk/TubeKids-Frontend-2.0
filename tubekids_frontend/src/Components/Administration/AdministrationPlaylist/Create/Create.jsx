@@ -77,7 +77,7 @@ const Create = () => {
 }, []);
 
   if (isCreated) {
-    return <Navigate to="/editCollection" />;
+    return <Navigate to="/adminCollection" />;
   }
 
   const save = async () => {

@@ -1,5 +1,5 @@
 import { useState, useEffect} from 'react';
-import { Navigate} from 'react-router-dom';
+import { Navigate, Link} from 'react-router-dom';
 import './Login.css';
 
 const Login = () => {
@@ -79,7 +79,7 @@ const Login = () => {
       setError('');
       localStorage.setItem("Key", key);
       
-// sendSMS(data.telefono);
+      sendSMS(data.telefono);
       setLoggedIn(true);
     } catch (error) {
       console.error('Error logging in:', error);
@@ -109,6 +109,7 @@ const Login = () => {
   return (
     <>
     <div className="wrapper">
+    <Link className='buttonh' to="/" >Register</Link>
       {error && <div className="error-message">{error}</div>}
       <form onSubmit={handleSubmit}>
         <h1>Sign in </h1>

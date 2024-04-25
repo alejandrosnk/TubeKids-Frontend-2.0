@@ -17,16 +17,16 @@ const Update = () => {
       if (!response.ok) {
         throw new Error('Error fetching collections');
       }
-      
+
       const data = await response.json();
       setVideos(data);
-      
+
     } catch (error) {
       console.error('Error fetching collections:', error);
     }
   };
   const handleDelete = async (id) => {
-
+    console.log(formData)
     try {
       const response = await fetch(`http://localhost:3001/api/videos?id=${id}`, {
         method: 'DELETE'
@@ -42,7 +42,7 @@ const Update = () => {
       console.log('Error deleting video. Please try again later.');
     }
     try {
-      const response = await fetch(`http://localhost:3001/api/collections?userId=${localStorage.getItem("IDcollection")}`, {
+      const response = await fetch(`http://localhost:3001/api/collections?id=${localStorage.getItem("IDcollection")}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
@@ -57,6 +57,7 @@ const Update = () => {
       console.log('Error updating video. Please try again later.');
     }
   };
+
   const handleEdit = (video) => {
     localStorage.setItem('videoToEdit', JSON.stringify(video));
     window.location.href = '/editVideo';
@@ -69,16 +70,16 @@ const Update = () => {
       setFormData({
         name: colData.name,
         user: colData.user,
-        videos: colData.videos-1
+        videos: colData.videos - 1
       });
     }
-    
+
   }, []);
 
-  
-  if(delet){
+
+  if (delet) {
     return <Navigate to="/adminCollection" />;
-}
+  }
 
   return (
     <div className="wrapper">
@@ -89,16 +90,16 @@ const Update = () => {
       <h1 >Add videos to collection</h1>
       <Link to="/createNewVideo" className="buttonh">Create new video</Link>
       <div className="child-list-containe">
-      <ul>
-        {videos.map(video => (
-          <li key={video._id}>
-            <h1>Name: {video.name}</h1>
-            <h3>Url: {video.url}</h3>
-            <button className="video-delete" onClick={() => handleDelete(video._id)}>Delete</button>
-            <button className="video-edit" onClick={() => handleEdit(video)}>Edit</button>
-          </li>
-        ))}
-      </ul>
+        <ul>
+          {videos.map(video => (
+            <li key={video._id}>
+              <h1>Name: {video.name}</h1>
+              <h3>Url: {video.url}</h3>
+              <button className="video-delete" onClick={() => handleDelete(video._id)}>Delete</button>
+              <button className="video-edit" onClick={() => handleEdit(video)}>Edit</button>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   )
